@@ -1,14 +1,16 @@
 from django.db import models
-from django.conf import settings
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 # Create your models here.
 class Post(models.Model):
     '''
     This is make post for the blog app
     '''
-
+    
     title = models.CharField(max_length=120)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
     content = models.TextField()
     status = models.BooleanField(default=False)
