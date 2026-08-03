@@ -3,6 +3,9 @@ from blog.models import Post, Category
 
 # Register your models here.
 class CustomPostAdmin(admin.ModelAdmin):
+    '''
+    This class fot make custome admin panel for post
+    '''
     model = Post
     list_display = ("title", "author", "status", "category", "published_date")
     list_filter = ("status", "author")

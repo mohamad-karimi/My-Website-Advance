@@ -1,0 +1,162 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 40px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 15px;
+}
+
+img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    object-fit: cover;
+}
+
+.content {
+    font-size: 17px;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
+    padding: 40px;
+    color: #333;
+}
+
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+
+.page-title {
+    text-align: center;
+    margin-bottom: 35px;
+    font-size: 36px;
+}
+
+
+.posts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.post-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+
+    transition: transform .2s;
+}
+
+
+.post-card:hover {
+    transform: translateY(-5px);
+}
+
+
+.post-title {
+    text-decoration: none;
+    color: #222;
+}
+
+
+.post-title h2 {
+    margin-bottom: 10px;
+}
+
+
+.post-info {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+
+.post-content {
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+
+.read-more {
+    text-decoration: none;
+    color: #0066ff;
+    font-weight: bold;
+}
+
+
+.pagination {
+    margin-top: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+.pagination a {
+    text-decoration: none;
+
+    background: #0066ff;
+    color: white;
+
+    padding: 8px 15px;
+
+    border-radius: 6px;
+}
+
+
+.pagination span {
+    font-weight: bold;
+}
+
+
+.empty {
+    text-align: center;
+    font-size: 20px;
+}

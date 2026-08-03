@@ -5,6 +5,9 @@ from accounts.forms import CustomUserChangeForm, CustomUserCreationForm
 
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
+    '''
+    This class for making custome admin panel for the user
+    '''
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser

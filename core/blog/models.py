@@ -25,6 +25,9 @@ class Post(models.Model):
         return self.title
     
 class Category(models.Model):
+    '''
+    The Category for the post
+    '''
     name = models.CharField(max_length=120)
 
     def __str__(self):
