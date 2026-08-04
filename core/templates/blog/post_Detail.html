@@ -11,6 +11,8 @@
 </head>
 <body>
 
+<div class="post-detail">
+
     <div class="container">
 
         <h1>{{ post.title }}</h1>
@@ -25,10 +27,12 @@
         {% endif %}
 
         <div class="content">
-            {{ post.content }}
+            {{ post.content|linebreaks }}
         </div>
 
     </div>
+
+</div>
 
 </body>
 </html>

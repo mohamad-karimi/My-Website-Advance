@@ -1,5 +1,10 @@
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from .models import Post
+from blog.forms import PostForm
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
+
 # Create your views here.
 class BlogView(TemplateView):
     '''
@@ -80,3 +85,18 @@ class PostDetailView(DetailView):
         return Post.objects.filter(
             status=True
         )
+    
+class PostCreateView(CreateView):
+    """
+    This claad for create a new post with form
+    """
+    model = Post
+    form_class = PostForm
+    template_name = "blog/post_create.html"
+    # success_url = '/blog/'
+
+    '''
+    Redirect user when create the post is successful
+    '''
+    def get_success_url(self):
+        return reverse_lazy("blog:list_post")
