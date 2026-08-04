@@ -1,9 +1,8 @@
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 from blog.forms import PostForm
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 # Create your views here.
 class BlogView(TemplateView):
@@ -38,7 +37,7 @@ class PostListView(ListView):
         posts = Post.objects.filter(status=True)
         return posts
     
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     '''
     class for detail view of each post
     '''
@@ -86,10 +85,13 @@ class PostDetailView(DetailView):
             status=True
         )
     
-class PostCreateView(CreateView):
+class PostCreateView(PermissionRequiredMixin, CreateView):
     """
     This claad for create a new post with form
     """
+    permission_required = "blog.add_post"
+    # Or multiple of permissions:
+    # permission_required = ["polls.view_choice", "polls.change_choice"]
     model = Post
     form_class = PostForm
     # success_url = '/blog/'
@@ -107,16 +109,18 @@ class PostCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy("blog:list_post")
     
-class PostEditView(UpdateView):
+class PostEditView(PermissionRequiredMixin, UpdateView):
     '''
     This class use for edit the post
     '''
     model = Post
+    permission_required = "change.add_post"
     form_class = PostForm
     success_url = '/blog/post/'
     pk_url_kwarg = "id"
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(PermissionRequiredMixin, DeleteView):
     model = Post
+    permission_required = "blog.delete_post"
     success_url = '/blog/post/'
     pk_url_kwarg = "id"

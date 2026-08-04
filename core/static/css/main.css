@@ -414,6 +414,30 @@
     background: #bb2d3b;
 }
 
+.edit-btn {
+    display: inline-block;
+
+    padding: 12px 25px;
+
+    background: #0d6efd;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 16px;
+    cursor: pointer;
+
+    text-decoration: none;
+
+    margin-right: 10px;
+}
+
+
+.edit-btn:hover {
+    background: #0b5ed7;
+}
+
 
 /* Cancel Button */
 
@@ -435,4 +459,112 @@
 
 .cancel-btn:hover {
     background: #565e64;
+}
+
+/* =====================
+   Login Page
+===================== */
+
+.form-card {
+    max-width: 450px;
+    margin: 80px auto;
+    background: white;
+
+    padding: 35px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+.form-card h1 {
+    text-align: center;
+
+    margin-bottom: 30px;
+
+    color: #333;
+
+    font-size: 32px;
+}
+
+
+/* Form fields */
+
+.form-card form p {
+    margin-bottom: 20px;
+}
+
+
+.form-card label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: bold;
+
+    color: #444;
+}
+
+
+.form-card input {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    box-sizing: border-box;
+}
+
+
+.form-card input:focus {
+    outline: none;
+
+    border-color: #0d6efd;
+}
+
+
+/* Login Button */
+
+.form-card button {
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 15px;
+
+    background: #0d6efd;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+
+.form-card button:hover {
+    background: #0b5ed7;
+}
+
+
+/* Error messages */
+
+.errorlist {
+    color: #dc3545;
+
+    list-style: none;
+
+    padding: 0;
+
+    margin-bottom: 10px;
 }
