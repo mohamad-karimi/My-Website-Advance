@@ -18,7 +18,7 @@
         <h1>{{ post.title }}</h1>
 
         <div class="meta">
-            <span><strong>Author:</strong> {{ post.author }}</span>
+            <span><strong>Author:</strong> {{ post.author.first_name }} {{ post.author.last_name}}</span>
             <span><strong>Category:</strong> {{ post.category }}</span>
         </div>
 
