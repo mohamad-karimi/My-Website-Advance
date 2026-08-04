@@ -30,6 +30,16 @@
             {{ post.content|linebreaks }}
         </div>
 
+
+        <div class="post-actions">
+
+            <a href="{% url 'blog:delete_post' post.id %}" class="delete-btn">
+                Delete Post
+            </a>
+
+        </div>
+
+
     </div>
 
 </div>

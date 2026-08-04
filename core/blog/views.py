@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, ListView, DetailView, CreateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 from blog.forms import PostForm
 from django.shortcuts import render
@@ -92,11 +92,31 @@ class PostCreateView(CreateView):
     """
     model = Post
     form_class = PostForm
-    template_name = "blog/post_create.html"
     # success_url = '/blog/'
+
+    '''
+    Use the username of the user insted of user add it manual in the create form
+    '''
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
     '''
     Redirect user when create the post is successful
     '''
     def get_success_url(self):
         return reverse_lazy("blog:list_post")
+    
+class PostEditView(UpdateView):
+    '''
+    This class use for edit the post
+    '''
+    model = Post
+    form_class = PostForm
+    success_url = '/blog/post/'
+    pk_url_kwarg = "id"
+
+class PostDeleteView(DeleteView):
+    model = Post
+    success_url = '/blog/post/'
+    pk_url_kwarg = "id"

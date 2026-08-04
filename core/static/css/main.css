@@ -355,3 +355,84 @@
 .contact-card button:hover {
     background: #0b5ed7;
 }
+
+/* =========================
+   Delete Post Page
+========================= */
+
+.delete-card {
+    max-width: 500px;
+    margin: 80px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+.delete-card h1 {
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: #333;
+}
+
+
+.delete-card p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+
+.delete-card strong {
+    color: #222;
+}
+
+
+/* Delete Button */
+
+.delete-btn {
+    display: inline-block;
+    padding: 12px 25px;
+
+    background: #dc3545;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 16px;
+    cursor: pointer;
+
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+
+.delete-btn:hover {
+    background: #bb2d3b;
+}
+
+
+/* Cancel Button */
+
+.cancel-btn {
+    display: inline-block;
+
+    padding: 12px 25px;
+
+    background: #6c757d;
+    color: white;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 16px;
+}
+
+
+.cancel-btn:hover {
+    background: #565e64;
+}
