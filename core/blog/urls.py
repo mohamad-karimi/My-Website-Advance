@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import RedirectView
 from blog import views
 
@@ -9,7 +9,8 @@ urlpatterns = [
     path("google/", RedirectView.as_view(url="https://www.google.com/"), name="go-to-google"),
     path("post/", views.PostListView.as_view(), name="list_post"),
     path("post/<int:id>/", views.PostDetailView.as_view(), name="single_post"),
-    path("post/create", views.PostCreateView.as_view(), name="create_post"),
+    path("post/create/", views.PostCreateView.as_view(), name="create_post"),
     path("post/<int:id>/edit/", views.PostEditView.as_view(), name="edit_post"),
     path('post/<int:id>/delete/', views.PostDeleteView.as_view(), name="delete_post"),
+    path("api/v1/", include("blog.api.v1.urls")),
 ]
