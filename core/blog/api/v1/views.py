@@ -1,10 +1,12 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from ...models import Post
 from .serializers import PostSerializers
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(["GET", "POST"])
+@permission_classes([IsAuthenticated])
 def post_list(request):
     if request.method == "GET":
         post = Post.objects.filter(status=True)
@@ -17,6 +19,7 @@ def post_list(request):
         return Response(serializers.data)
 
 @api_view(["GET", "PUT", "DELETE"])
+@permission_classes([IsAuthenticated])
 def post_detail(request, id):
     try:
         post = Post.objects.get(pk = id, status=True)

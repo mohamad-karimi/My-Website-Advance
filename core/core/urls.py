@@ -24,6 +24,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('blog/', include('blog.urls')),
     path('', include('website.urls')),
+    path("api-auth/", include("rest_framework.urls")),
 ]
 
 # Serve static and media files during development
