@@ -1,12 +1,13 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from ...models import Post
-from .serializers import PostSerializers
+from ...models import Post, Category
+from .serializers import PostSerializers, CategorySerializers
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework import viewsets
 
 # Example for function base view
 '''
@@ -113,22 +114,85 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 """
 
 # Example for generic view
-class ListPostGenericView(ListCreateAPIView):
+"""
+    class ListPostGenericView(ListCreateAPIView):
+        '''
+        Use list and create GAV for show the list of
+        the post and create a new post
+        '''
+        permission_classes = [IsAuthenticated]
+        serializer_class = PostSerializers
+
+        queryset = Post.objects.filter(status=True)
+
+    class DetailPostGenericView(RetrieveUpdateDestroyAPIView):
+        '''
+        Use retrieve, update and destroy for show a detail info and update and 
+        delete the post
+        '''
+        permission_classes = [IsAuthenticated]
+        serializer_class = PostSerializers
+
+        queryset = Post.objects.filter(status=True)
+"""
+
+# Example for View sets
+"""
+    class PostViewSet(viewsets.ViewSet):
+        '''
+        use view set for blog post
+        '''
+        permission_classes = [IsAuthenticated]
+        serializer_class = PostSerializers
+
+        queryset = Post.objects.filter(status=True)
+
+        def list(self, request):
+            '''
+            show the list of the post
+            '''
+            serializer = self.serializer_class(self.queryset, many=True)
+            return Response(serializer.data)
+        
+        def retrieve(self, request, pk=None):
+            '''
+            Filter the post with id to show the detail of the
+            each post
+            '''
+            post = get_object_or_404(self.queryset, pk=pk)
+            serializer = self.serializer_class(post)
+            return Response(serializer.data)
+        
+        def create(self, request):
+            pass
+
+        def update(self, request, pk=None):
+            pass
+
+        def partial_update(self, request, pk=None):
+            pass
+
+        def destroy(self, request, pk=None):
+            pass
+"""
+
+# Example for model view Set
+class PostModelViewSet(viewsets.ModelViewSet):
     '''
-    Use list and create GAV for show the list of
-    the post and create a new post
+    use model view set for blog post to show list of the post and details
+    post and create, pull, path, delete
     '''
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializers
 
     queryset = Post.objects.filter(status=True)
 
-class DetailPostGenericView(RetrieveUpdateDestroyAPIView):
+class CategoryModelViewSet(viewsets.ModelViewSet):
     '''
-    Use retrieve, update and destroy for show a detail info and update and 
-    delete the post
+    use model view set for blog post to show list of the post and details
+    post and create, pull, path, delete
     '''
     permission_classes = [IsAuthenticated]
-    serializer_class = PostSerializers
+    serializer_class = CategorySerializers
 
-    queryset = Post.objects.filter(status=True)
+    queryset = Category.objects.all()
