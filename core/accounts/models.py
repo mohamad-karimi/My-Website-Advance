@@ -67,4 +67,4 @@ class Profile(models.Model):
     update_date = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.user.email
+        return f"{self.first_name} {self.last_name}"
