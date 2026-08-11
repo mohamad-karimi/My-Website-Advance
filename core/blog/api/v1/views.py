@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import viewsets
+from .permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
 
 # Example for function base view
 '''
@@ -182,7 +183,7 @@ class PostModelViewSet(viewsets.ModelViewSet):
     use model view set for blog post to show list of the post and details
     post and create, pull, path, delete
     '''
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsAdminOrReadOnly]
     serializer_class = PostSerializers
 
     queryset = Post.objects.filter(status=True)
