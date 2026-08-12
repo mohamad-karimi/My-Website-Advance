@@ -26,7 +26,7 @@ from drf_spectacular.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('accounts.urls')),
     path('blog/', include('blog.urls')),
     path('', include('website.urls')),
     path("api-auth/", include("rest_framework.urls")),

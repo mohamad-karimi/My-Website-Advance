@@ -120,6 +120,9 @@ class PostEditView(PermissionRequiredMixin, UpdateView):
     pk_url_kwarg = "id"
 
 class PostDeleteView(PermissionRequiredMixin, DeleteView):
+    '''
+    This class for delete the post
+    '''
     model = Post
     permission_required = "blog.delete_post"
     success_url = '/blog/post/'
