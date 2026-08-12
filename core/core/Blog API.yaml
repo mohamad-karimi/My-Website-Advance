@@ -1,0 +1,502 @@
+openapi: 3.0.3
+info:
+  title: Blog API
+  version: 1.0.0
+  description: API documentation for Blog application
+paths:
+  /blog/api/v1/category/:
+    get:
+      operationId: blog_api_v1_category_list
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      tags:
+      - blog
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategorySerializers'
+          description: ''
+    post:
+      operationId: blog_api_v1_category_create
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      tags:
+      - blog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategorySerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CategorySerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CategorySerializers'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorySerializers'
+          description: ''
+  /blog/api/v1/category/{id}/:
+    get:
+      operationId: blog_api_v1_category_retrieve
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - blog
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorySerializers'
+          description: ''
+    put:
+      operationId: blog_api_v1_category_update
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - blog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategorySerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CategorySerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CategorySerializers'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorySerializers'
+          description: ''
+    patch:
+      operationId: blog_api_v1_category_partial_update
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - blog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCategorySerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCategorySerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCategorySerializers'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategorySerializers'
+          description: ''
+    delete:
+      operationId: blog_api_v1_category_destroy
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - blog
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /blog/api/v1/post/:
+    get:
+      operationId: blog_api_v1_post_list
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      parameters:
+      - in: query
+        name: author
+        schema:
+          type: array
+          items:
+            type: integer
+        explode: true
+        style: form
+      - in: query
+        name: category
+        schema:
+          type: array
+          items:
+            type: integer
+        explode: true
+        style: form
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: boolean
+      tags:
+      - blog
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPostSerializersList'
+          description: ''
+    post:
+      operationId: blog_api_v1_post_create
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      tags:
+      - blog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostSerializers'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostSerializers'
+          description: ''
+  /blog/api/v1/post/{id}/:
+    get:
+      operationId: blog_api_v1_post_retrieve
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this post.
+        required: true
+      tags:
+      - blog
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostSerializers'
+          description: ''
+    put:
+      operationId: blog_api_v1_post_update
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this post.
+        required: true
+      tags:
+      - blog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PostSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PostSerializers'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostSerializers'
+          description: ''
+    patch:
+      operationId: blog_api_v1_post_partial_update
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this post.
+        required: true
+      tags:
+      - blog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPostSerializers'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPostSerializers'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPostSerializers'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostSerializers'
+          description: ''
+    delete:
+      operationId: blog_api_v1_post_destroy
+      description: |-
+        use model view set for blog post to show list of the post and details
+        post and create, pull, path, delete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this post.
+        required: true
+      tags:
+      - blog
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    CategorySerializers:
+      type: object
+      description: '# Make serializer for Category'
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 120
+      required:
+      - id
+      - name
+    PaginatedPostSerializersList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PostSerializers'
+    PatchedCategorySerializers:
+      type: object
+      description: '# Make serializer for Category'
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 120
+    PatchedPostSerializers:
+      type: object
+      description: '# Make serializer for post model'
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 120
+        image:
+          type: string
+          format: uri
+          nullable: true
+        absolute_url:
+          type: string
+          readOnly: true
+        author:
+          type: integer
+          readOnly: true
+        content:
+          type: string
+        snippet:
+          type: string
+          readOnly: true
+        status:
+          type: boolean
+        category:
+          type: integer
+        published_date:
+          type: string
+          format: date
+    PostSerializers:
+      type: object
+      description: '# Make serializer for post model'
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 120
+        image:
+          type: string
+          format: uri
+          nullable: true
+        absolute_url:
+          type: string
+          readOnly: true
+        author:
+          type: integer
+          readOnly: true
+        content:
+          type: string
+        snippet:
+          type: string
+          readOnly: true
+        status:
+          type: boolean
+        category:
+          type: integer
+        published_date:
+          type: string
+          format: date
+      required:
+      - absolute_url
+      - author
+      - category
+      - content
+      - id
+      - published_date
+      - snippet
+      - title
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
