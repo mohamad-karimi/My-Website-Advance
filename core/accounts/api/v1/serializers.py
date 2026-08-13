@@ -6,6 +6,9 @@ from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.contrib.auth import get_user_model
+
+User = get_user_model
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(max_length=120, write_only = True)
@@ -90,3 +93,27 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         validate_date["user_id"] = self.user.id
 
         return validate_date
+    
+class PasswordChangeSerializer(serializers.Serializer):
+    old_password = serializers.CharField(
+        required=True,
+        write_only=True
+    )
+
+    new_password = serializers.CharField(
+        required=True,
+        write_only=True
+    )
+
+    new_password2 = serializers.CharField(
+        required=True,
+        write_only=True
+    )
+
+    def validate(self, attrs):
+        if attrs["new_password"] != attrs["new_password2"]:
+            raise serializers.ValidationError({
+                "new_password2": "Passwords do not match."
+            })
+
+        return attrs
