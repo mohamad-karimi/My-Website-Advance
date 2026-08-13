@@ -1,16 +1,18 @@
 from rest_framework.generics import GenericAPIView
 from .serializers import RegistrationSerializer
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from .serializers import CustomAuthTokenSerializer, CustomTokenObtainPairSerializer, PasswordChangeSerializer
+from .serializers import *
 from rest_framework.views import APIView
 from drf_spectacular.utils import extend_schema
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
+from ...models import Profile
+from django.shortcuts import get_object_or_404
 
 User = get_user_model
 
@@ -90,3 +92,14 @@ class PasswordChangeApiView(GenericAPIView):
             {"detail": "Password changed successfully."},
             status=status.HTTP_200_OK
         )
+
+@extend_schema(tags=["Profile"])
+class ProfileApiView(generics.RetrieveUpdateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset, user=self.request.user)
+        return obj

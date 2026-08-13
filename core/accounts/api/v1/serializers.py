@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ...models import CustomUser
+from ...models import CustomUser, Profile
 import django.contrib.auth.password_validation as validators
 from django.core import exceptions
 from django.contrib.auth import authenticate
@@ -117,3 +117,13 @@ class PasswordChangeSerializer(serializers.Serializer):
             })
 
         return attrs
+    
+class ProfileSerializer(serializers.ModelSerializer):
+    """Profile serializer to manage extra user info"""
+
+    class Meta:
+        model = Profile
+        fields = [
+            "first_name",
+            "last_name",
+        ]
