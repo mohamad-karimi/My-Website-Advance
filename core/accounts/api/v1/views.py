@@ -13,6 +13,12 @@ from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
 from ...models import Profile
 from django.shortcuts import get_object_or_404
+from mail_templated import EmailMessage
+from ..utility import EmailThreading
+from django.conf import settings
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.exceptions import TokenError
 
 User = get_user_model()
 
@@ -24,16 +30,63 @@ class RegistrationApiView(GenericAPIView):
         serializer = self.serializer_class(data = request.data)
 
         if serializer.is_valid():
-            serializer.save()
-            data = {
-                "email":serializer.validated_data["email"]
-            }
-            return Response(data, status=status.HTTP_201_CREATED)
+            user = serializer.save()
+            user_email = user.email
+            token = RefreshToken.for_user(user)
+            token["type"] = "email_verification"
+
+            email = EmailMessage('email/email_verified.tpl', {'token': str(token.access_token)}, settings.DEFAULT_FROM_EMAIL, to=[user_email])
+            EmailThreading(email).start()
+
+            return Response({"user_email": user_email, "token":str(token.access_token)}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@extend_schema(tags=["Authentication"])
+class ActivationConfirmApiView(APIView):
+    def get(self, request, token):
+        try:
+            access_token = AccessToken(token)
 
+            if access_token.get("type") != "email_verification":
+                return Response({"detail": "Invalid token type."}, status=status.HTTP_400_BAD_REQUEST)
+            
+            user_id = access_token["user_id"]
 
+        except TokenError:
+            return Response({"detail": "Invalid or expired token."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
+        user.is_verified = True
+        user.save(update_fields=["is_verified"])
+
+        return Response({"detail": "Email successfully verified."}, status=status.HTTP_200_OK)
+
+@extend_schema(tags=["Authentication"])
+class ActivationResendApiView(GenericAPIView):
+    serializer_class = ActivationResendSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            user = serializer.validated_data["user"]
+            user_email = user.email
+
+            token = RefreshToken.for_user(user)
+            token["type"] = "email_verification"
+
+            email = EmailMessage('email/email_verified.tpl', {'token': str(token.access_token)}, settings.DEFAULT_FROM_EMAIL, to=[user_email])
+
+            EmailThreading(email).start()
+
+            return Response({"user_email": user_email, "token":str(token.access_token)}, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 @extend_schema(tags=["Token"])
 class CustomObtainAuthToken(ObtainAuthToken):
     serializer_class = CustomAuthTokenSerializer

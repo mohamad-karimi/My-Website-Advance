@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     "rest_framework_simplejwt.token_blacklist",
+    'mail_templated',
 
     # my apps
     'accounts',
@@ -183,3 +184,16 @@ SIMPLE_JWT = {
 
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+# Email verifications setting
+EMAIL_HOST = 'smtp4dev'
+EMAIL_PORT = 25
+
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+
+DEFAULT_FROM_EMAIL = 'test@example.com'
+SERVER_EMAIL = 'test@example.com'

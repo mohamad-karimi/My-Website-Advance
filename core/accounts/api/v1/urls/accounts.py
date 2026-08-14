@@ -2,11 +2,15 @@ from django.urls import path
 from .. import views
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
-app_name = 'api-v1'
-
 urlpatterns = [ 
     # Registration
     path('registration', views.RegistrationApiView.as_view(), name="registration"),
+
+    # Activation
+    path("activation/confirm/<str:token>", views.ActivationConfirmApiView.as_view(), name="activation-confirm"),
+    
+    # Reset Activation
+    path("activation/resend/", views.ActivationResendApiView.as_view(), name="activation-resend"),
 
     # Change password
     path('password/change/', views.PasswordChangeApiView.as_view(), name="password-change"),

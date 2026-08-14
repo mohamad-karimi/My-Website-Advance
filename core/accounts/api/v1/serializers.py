@@ -137,3 +137,18 @@ class ProfileSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
         ]
+
+class ActivationResendSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def validate(self, attrs):
+        try:
+            user = User.objects.get(email=attrs["email"])
+        except User.DoesNotExist:
+            raise serializers.ValidationError({"email": "User with this email does not exist."})
+
+        if user.is_verified:
+            raise serializers.ValidationError({"email": "Email is already verified."})
+
+        attrs["user"] = user
+        return attrs
