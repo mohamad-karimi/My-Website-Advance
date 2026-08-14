@@ -6,7 +6,7 @@ from .models import CustomUser
 
 class CustomUserCreationForm(forms.ModelForm):
     '''
-    This class for making the custome user create form
+    This class for making the custom user create form
     '''
     password1 = forms.CharField(
         label="Password",
@@ -18,7 +18,7 @@ class CustomUserCreationForm(forms.ModelForm):
     )
 
     '''
-    That is the meta class for choosing the fieds to show
+    That is the meta class for choosing the fields to show
     '''
     class Meta:
         model = CustomUser
@@ -27,6 +27,7 @@ class CustomUserCreationForm(forms.ModelForm):
             "is_staff",
             "is_active",
             "is_superuser",
+            "is_verified",
             "groups",
             "user_permissions",
         )
@@ -58,12 +59,12 @@ class CustomUserCreationForm(forms.ModelForm):
 
 class CustomUserChangeForm(forms.ModelForm):
     '''
-    This class for making the custome user change form
+    This class for making the custom user change form
     '''
     password = ReadOnlyPasswordHashField()
 
     '''
-    That is the meta class for choosing the fieds to show
+    That is the meta class for choosing the fields to show
     '''
     class Meta:
         model = CustomUser
@@ -73,6 +74,7 @@ class CustomUserChangeForm(forms.ModelForm):
             "is_active",
             "is_staff",
             "is_superuser",
+            "is_verified",
             "groups",
             "user_permissions",
             "last_login",

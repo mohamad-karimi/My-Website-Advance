@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import viewsets
-from .permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
+from .permissions import IsOwnerOrAdminOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from .paginations import CustomPagination
@@ -187,7 +187,7 @@ class PostModelViewSet(viewsets.ModelViewSet):
     use model view set for blog post to show list of the post and details
     post and create, pull, path, delete
     '''
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsAdminOrReadOnly]
+    permission_classes = [IsOwnerOrAdminOrReadOnly, ]
     serializer_class = PostSerializers
     queryset = Post.objects.filter(status=True)
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]

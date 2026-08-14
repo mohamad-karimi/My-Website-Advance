@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from ...models import Post
+from ....models import Post
 from django.urls import reverse
 from accounts.models import Profile
-
+from ..serializers import CategorySerializers
 # Base serializers
 '''
     class PostSerializers(serializers.Serializer):

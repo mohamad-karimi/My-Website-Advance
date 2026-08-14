@@ -8,7 +8,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import get_user_model
 
-User = get_user_model
+User = get_user_model()
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(max_length=120, write_only = True)
@@ -59,30 +59,35 @@ class CustomAuthTokenSerializer(serializers.Serializer):
     )
 
     def validate(self, attrs):
-        email = attrs.get('email')
-        password = attrs.get('password')
+        email = attrs.get("email")
+        password = attrs.get("password")
 
         if email and password:
             user = authenticate(
-                request=self.context.get('request'),
+                request=self.context.get("request"),
                 username=email,
                 password=password
             )
 
             if not user:
-                msg = _('Unable to log in with provided credentials.')
+                msg = _("Unable to log in with provided credentials.")
                 raise serializers.ValidationError(
                     msg,
-                    code='authorization'
+                    code="authorization"
                 )
         else:
             msg = _('Must include "email" and "password".')
             raise serializers.ValidationError(
                 msg,
-                code='authorization'
+                code="authorization"
             )
 
-        attrs['user'] = user
+        if not user.is_verified:
+            raise serializers.ValidationError({
+                "detail": "Your account is not verified."
+            })
+
+        attrs["user"] = user
         return attrs
     
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -92,6 +97,11 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         validate_date["email"] = self.user.email
         validate_date["user_id"] = self.user.id
 
+        if not self.user.is_verified:
+            raise serializers.ValidationError({
+                "detail": "Your account is not verified."
+            })
+    
         return validate_date
     
 class PasswordChangeSerializer(serializers.Serializer):
