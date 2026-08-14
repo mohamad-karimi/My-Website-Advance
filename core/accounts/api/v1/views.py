@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
-from rest_framework.response import Response
 from .serializers import *
 from rest_framework.views import APIView
 from drf_spectacular.utils import extend_schema
@@ -16,17 +15,26 @@ from django.shortcuts import get_object_or_404
 from mail_templated import EmailMessage
 from ..utility import EmailThreading
 from django.conf import settings
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.exceptions import TokenError
 
 User = get_user_model()
 
 @extend_schema(tags=["Authentication"])
 class RegistrationApiView(GenericAPIView):
+    '''
+    API view for registering a new user.
+    Creates an email verification JWT and sends it to the user.
+    '''
+        
     serializer_class = RegistrationSerializer
 
     def post(self, request, *args, **kwargs):
+        '''
+        Validate the registration data, create the user,
+        generate an email verification token, and send the verification email.
+        '''
+                
         serializer = self.serializer_class(data = request.data)
 
         if serializer.is_valid():
@@ -43,7 +51,16 @@ class RegistrationApiView(GenericAPIView):
 
 @extend_schema(tags=["Authentication"])
 class ActivationConfirmApiView(APIView):
+    '''
+    API view for confirming a user's email address.
+    Validates the JWT and activates the associated user account.
+    '''
+        
     def get(self, request, token):
+        '''
+        Validate the activation token and mark the user's email as verified.
+        '''
+                
         try:
             access_token = AccessToken(token)
 
@@ -67,9 +84,19 @@ class ActivationConfirmApiView(APIView):
 
 @extend_schema(tags=["Authentication"])
 class ActivationResendApiView(GenericAPIView):
+    '''
+    API view for resending the email activation link.
+    Generates a new verification JWT for an unverified user.
+    '''
+        
     serializer_class = ActivationResendSerializer
 
     def post(self, request, *args, **kwargs):
+        '''
+        Validate the user's email, generate a new activation token,
+        and send the verification email again.
+        '''
+                
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
@@ -89,9 +116,18 @@ class ActivationResendApiView(GenericAPIView):
     
 @extend_schema(tags=["Token"])
 class CustomObtainAuthToken(ObtainAuthToken):
+    '''
+    API view for obtaining a DRF authentication token.
+    Authenticates the user using email and password.
+    '''
+        
     serializer_class = CustomAuthTokenSerializer
 
     def post(self, request, *args, **kwargs): 
+        '''
+        Validate the user's credentials and return an authentication token.
+        '''
+                
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)
@@ -105,24 +141,47 @@ class CustomObtainAuthToken(ObtainAuthToken):
 
 @extend_schema(tags=["Token"])
 class CustomDestroyAuthToken(APIView):
-
+    '''
+    API view for deleting the authenticated user's DRF token.
+    '''
+        
     def post(self, request):
+        '''
+        Delete the current user's authentication token.
+        '''
+                
         request.user.auth_token.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT) 
     
 class CustomTokenObtainPairView(TokenObtainPairView):
+    '''
+    Custom JWT token view that uses the custom token serializer.
+    '''
+        
     serializer_class = CustomTokenObtainPairSerializer
 
 @extend_schema(tags=["Authentication"])
 class PasswordChangeApiView(GenericAPIView):
+    '''
+    API view for changing the authenticated user's password.
+    '''
+        
     serializer_class = PasswordChangeSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
+        '''
+        Return the currently authenticated user.
+        '''
+                
         return self.request.user
 
     def put(self, request, *args, **kwargs):
+        '''
+        Validate the old password and update it with the new password.
+        '''
+                
         user = self.get_object()
 
         serializer = self.get_serializer(data=request.data)
@@ -148,11 +207,19 @@ class PasswordChangeApiView(GenericAPIView):
 
 @extend_schema(tags=["Profile"])
 class ProfileApiView(generics.RetrieveUpdateAPIView):
+    '''
+    API view for retrieving and updating the authenticated user's profile.
+    '''
+        
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
+        '''
+        Return the profile belonging to the currently authenticated user.
+        '''
+                
         queryset = self.get_queryset()
         obj = get_object_or_404(queryset, user=self.request.user)
         return obj
