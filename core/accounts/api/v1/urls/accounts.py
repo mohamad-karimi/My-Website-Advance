@@ -11,9 +11,6 @@ urlpatterns = [
     # Change password
     path('password/change/', views.PasswordChangeApiView.as_view(), name="password-change"),
 
-    # User Profile
-    path('profile/', views.ProfileApiView.as_view(), name="profile"),
-
     # Token login
     path('token/login/', views.CustomObtainAuthToken.as_view(), name="token-login"),
     path('token/logout/', views.CustomDestroyAuthToken.as_view(), name="token-logout"),

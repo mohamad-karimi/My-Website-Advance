@@ -14,7 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 from ...models import Profile
 from django.shortcuts import get_object_or_404
 
-User = get_user_model
+User = get_user_model()
 
 @extend_schema(tags=["Authentication"])
 class RegistrationApiView(GenericAPIView):

@@ -1,23 +1,13 @@
 from rest_framework import serializers
-from ...models import Post, Category
+from ...models import Post
 from django.urls import reverse
 from accounts.models import Profile
 
 # Base serializers
-# class PostSerializers(serializers.Serializer):
-#     title = serializers.CharField(max_length=200)
-
-# Model serializers
-class CategorySerializers(serializers.ModelSerializer):
-    '''
-    # Make serializer for Category
-    '''
-    class Meta:
-        model = Category
-        fields  = [
-            "id",
-            "name",
-        ]
+'''
+    class PostSerializers(serializers.Serializer):
+        title = serializers.CharField(max_length=200)
+'''
 
 class PostSerializers(serializers.ModelSerializer):
     '''
