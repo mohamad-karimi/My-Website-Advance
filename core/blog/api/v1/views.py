@@ -1,12 +1,6 @@
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
 from ...models import Post, Category
 from .serializers import PostSerializers, CategorySerializers
-from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
-from django.shortcuts import get_object_or_404
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import viewsets
 from .permissions import IsOwnerOrAdminOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
@@ -56,7 +50,7 @@ from .filters import PostFilter
     #     elif request.method == "DELETE":
     #         post.delete()
     #         return Response({"detail":"Post deleted"}, status=status.HTTP_204_NO_CONTENT)
-'''   
+'''
 
 # Example for class base view
 """
@@ -181,26 +175,32 @@ from .filters import PostFilter
             pass
 """
 
+
 # Example for model view Set
 class PostModelViewSet(viewsets.ModelViewSet):
-    '''
+    """
     use model view set for blog post to show list of the post and details
     post and create, pull, path, delete
-    '''
-    permission_classes = [IsOwnerOrAdminOrReadOnly, ]
+    """
+
+    permission_classes = [
+        IsOwnerOrAdminOrReadOnly,
+    ]
     serializer_class = PostSerializers
     queryset = Post.objects.filter(status=True)
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = PostFilter
-    search_fields = ['title', 'content']
-    ordering_fields = ['published_date']
+    search_fields = ["title", "content"]
+    ordering_fields = ["published_date"]
     pagination_class = CustomPagination
 
+
 class CategoryModelViewSet(viewsets.ModelViewSet):
-    '''
+    """
     use model view set for blog post to show list of the post and details
     post and create, pull, path, delete
-    '''
+    """
+
     permission_classes = [IsAuthenticated]
     serializer_class = CategorySerializers
     queryset = Category.objects.all()

@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -25,23 +26,21 @@ from drf_spectacular.views import (
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('accounts.urls')),
-    path('blog/', include('blog.urls')),
-    path('', include('website.urls')),
+    path("admin/", admin.site.urls),
+    path("", include("accounts.urls")),
+    path("blog/", include("blog.urls")),
+    path("", include("website.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path(
         "api/schema/",
         SpectacularAPIView.as_view(),
         name="schema",
     ),
-
     path(
         "api/swagger/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
-
     path(
         "api/redoc/",
         SpectacularRedocView.as_view(url_name="schema"),
@@ -51,5 +50,9 @@ urlpatterns = [
 
 # Serve static and media files during development
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.STATIC_URL, document_root=settings.STATIC_ROOT
+    )
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )

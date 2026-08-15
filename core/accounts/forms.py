@@ -5,21 +5,19 @@ from .models import CustomUser
 
 
 class CustomUserCreationForm(forms.ModelForm):
-    '''
+    """
     This class for making the custom user create form
-    '''
-    password1 = forms.CharField(
-        label="Password",
-        widget=forms.PasswordInput
-    )
+    """
+
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(
-        label="Confirm Password",
-        widget=forms.PasswordInput
+        label="Confirm Password", widget=forms.PasswordInput
     )
 
-    '''
+    """
     That is the meta class for choosing the fields to show
-    '''
+    """
+
     class Meta:
         model = CustomUser
         fields = (
@@ -32,9 +30,10 @@ class CustomUserCreationForm(forms.ModelForm):
             "user_permissions",
         )
 
-    '''
+    """
     That function for check that two password same
-    '''
+    """
+
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
@@ -44,9 +43,10 @@ class CustomUserCreationForm(forms.ModelForm):
 
         return password2
 
-    '''
+    """
     That function for encrypt the password
-    '''
+    """
+
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
@@ -58,14 +58,16 @@ class CustomUserCreationForm(forms.ModelForm):
 
 
 class CustomUserChangeForm(forms.ModelForm):
-    '''
+    """
     This class for making the custom user change form
-    '''
+    """
+
     password = ReadOnlyPasswordHashField()
 
-    '''
+    """
     That is the meta class for choosing the fields to show
-    '''
+    """
+
     class Meta:
         model = CustomUser
         fields = (

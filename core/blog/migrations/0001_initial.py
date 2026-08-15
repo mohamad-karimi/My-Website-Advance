@@ -9,30 +9,61 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('accounts', '0001_initial'),
+        ("accounts", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=120)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=120)),
             ],
         ),
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=120)),
-                ('image', models.ImageField(blank=True, null=True, upload_to='')),
-                ('content', models.TextField()),
-                ('status', models.BooleanField(default=False)),
-                ('create_date', models.DateField(auto_now_add=True)),
-                ('update_date', models.DateField(auto_now=True)),
-                ('published_date', models.DateField()),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounts.profile')),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blog.category')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=120)),
+                (
+                    "image",
+                    models.ImageField(blank=True, null=True, upload_to=""),
+                ),
+                ("content", models.TextField()),
+                ("status", models.BooleanField(default=False)),
+                ("create_date", models.DateField(auto_now_add=True)),
+                ("update_date", models.DateField(auto_now=True)),
+                ("published_date", models.DateField()),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="accounts.profile",
+                    ),
+                ),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="blog.category",
+                    ),
+                ),
             ],
         ),
     ]
