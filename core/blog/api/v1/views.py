@@ -36,17 +36,14 @@ from .filters import PostFilter
     #         post = Post.objects.get(pk = id, status=True)
     #     except Post.DoesNotExist:
     #         return Response({"detail":"Post not found"}, status=status.HTTP_404_NOT_FOUND)
-        
     #     if request.method == "GET":
     #         serializers = PostSerializers(post)
     #         return Response(serializers.data)
-        
     #     elif request.method == "PUT":
     #         serializers = PostSerializers(post, data=request.data)
     #         serializers.is_valid(raise_exception=True)
     #         serializers.save()
     #         return Response(serializers.data)
-        
     #     elif request.method == "DELETE":
     #         post.delete()
     #         return Response({"detail":"Post deleted"}, status=status.HTTP_204_NO_CONTENT)
@@ -68,7 +65,6 @@ from .filters import PostFilter
             post = Post.objects.filter(status=True)
             serializers = PostSerializers(post, many=True)
             return Response(serializers.data)
-        
         def post(self,request):
             '''
             Creating a new post
@@ -84,7 +80,6 @@ from .filters import PostFilter
     class DetailPostApiView(APIView):
         permission_classes = [IsAuthenticated]
         serializer_class = PostSerializers
-        
         def get(self,request, id):
             '''
             Getting the detail of post
@@ -92,7 +87,6 @@ from .filters import PostFilter
             post = get_object_or_404(Post, pk=id, status=True)
             serializers = self.serializer_class(post)
             return Response(serializers.data)
-        
         def put(self,request,id):
             '''
             Updating the details info of post
@@ -102,7 +96,6 @@ from .filters import PostFilter
             serializers.is_valid(raise_exception=True)
             serializers.save()
             return Response(serializers.data)
-        
         def delete(self, request, id):
             '''
             Deleting the post
@@ -126,7 +119,7 @@ from .filters import PostFilter
 
     class DetailPostGenericView(RetrieveUpdateDestroyAPIView):
         '''
-        Use retrieve, update and destroy for show a detail info and update and 
+        Use retrieve, update and destroy for show a detail info and update and
         delete the post
         '''
         permission_classes = [IsAuthenticated]
@@ -152,7 +145,6 @@ from .filters import PostFilter
             '''
             serializer = self.serializer_class(self.queryset, many=True)
             return Response(serializer.data)
-        
         def retrieve(self, request, pk=None):
             '''
             Filter the post with id to show the detail of the
@@ -161,7 +153,6 @@ from .filters import PostFilter
             post = get_object_or_404(self.queryset, pk=pk)
             serializer = self.serializer_class(post)
             return Response(serializer.data)
-        
         def create(self, request):
             pass
 

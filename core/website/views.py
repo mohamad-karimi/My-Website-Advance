@@ -23,7 +23,7 @@ class ContactFormView(FormView):
     #     return initial
 
     """
-    Use that when you dont want to save the data into the DB 
+    Use that when you dont want to save the data into the DB
     you want to send that contact to the admin email
     """
     # def form_valid(self, form):
