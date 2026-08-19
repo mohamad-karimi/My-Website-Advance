@@ -9,8 +9,16 @@ router.register(r"category", CategoryModelViewSet, basename="category")
 
 urlpatterns = [
     # path("post/", ListPostGenericView.as_view(), name="post-list"),
-    # path("post/<int:pk>/", DetailPostGenericView.as_view(), name="post-detail"),
-    # path("post/", PostViewSet.as_view({"get": "list", "post": "create"}), name="post-list"),
+    # path(
+    #     "post/<int:pk>/",
+    #     DetailPostGenericView.as_view(),
+    #     name="post-detail"
+    #     ),
+    # path(
+    #     "post/",
+    #     PostViewSet.as_view({"get": "list", "post": "create"}),
+    #     name="post-list"
+    #     ),
     # path("post/<int:pk>/", PostViewSet.as_view({
     #     "get": "retrieve",
     #     "put": "update",

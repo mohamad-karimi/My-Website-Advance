@@ -12,7 +12,7 @@ sent that contact to the admin email
 # message = forms.CharField(widget=forms.Textarea)
 
 """
-This class for make form for contact view when you want to send the 
+This class for make form for contact view when you want to send the
 email and save the contact to the DB
 """
 

@@ -7,7 +7,6 @@ import random
 from accounts.models import Profile
 from blog.models import Post, Category
 
-
 User = get_user_model()
 
 
@@ -23,7 +22,9 @@ category_list = [
 class Command(BaseCommand):
     help = "Insert fake data for posts"
 
-    def __init__(self, stdout=None, stderr=None, no_color=None, force_color=None):
+    def __init__(
+        self, stdout=None, stderr=None, no_color=None, force_color=None
+    ):
         super().__init__(stdout, stderr, no_color, force_color)
         self.fake = Faker()
 
@@ -42,7 +43,7 @@ class Command(BaseCommand):
         profile.last_name = self.fake.last_name()
         profile.description = self.fake.paragraph(nb_sentences=5)
         profile.save()
-        
+
         for name in category_list:
             Category.objects.get_or_create(name=name)
 
