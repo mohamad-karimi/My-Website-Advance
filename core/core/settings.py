@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     # Third-party
     "django_filters",
     "rest_framework",
@@ -54,6 +55,8 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "mail_templated",
     "djoser",
+    "corsheaders",
+
     # my apps
     "accounts",
     "blog",
@@ -63,6 +66,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -195,3 +199,6 @@ EMAIL_USE_SSL = False
 
 DEFAULT_FROM_EMAIL = "test@example.com"
 SERVER_EMAIL = "test@example.com"
+
+# Authorize to the api
+CORS_ALLOW_ALL_ORIGINS = True

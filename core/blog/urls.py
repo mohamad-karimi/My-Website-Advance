@@ -12,6 +12,7 @@ urlpatterns = [
         name="go-to-google",
     ),
     path("post/", views.PostListView.as_view(), name="list_post"),
+    path("post/api/", views.PostListApi.as_view(), name="post-list-api"),
     path(
         "post/<int:id>/", views.PostDetailView.as_view(), name="single_post"
     ),

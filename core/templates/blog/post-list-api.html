@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Posts</title>
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+<div class="post-list">
+
+    <div class="container">
+
+        <div class="page-header">
+            <h1 class="page-title">Latest Posts</h1>
+
+            <a href="{% url 'blog:create_post' %}" class="create-post-btn">
+                + Create Post
+            </a>
+        </div>
+
+        <!-- Posts will be loaded here -->
+        <div class="posts" id="posts-container">
+            <p>Loading posts...</p>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+$(document).ready(function () {
+
+    function loadPosts(page = 1) {
+
+        $.ajax({
+            url: `/blog/api/v1/post/?page=${page}`,
+            type: "GET",
+
+            success: function (response) {
+
+                console.log("API RESPONSE:");
+                console.log(response);
+
+                let postsContainer = $("#posts-container");
+
+                postsContainer.empty();
+
+                if (!response.results || response.results.length === 0) {
+                    postsContainer.html(
+                        "<p class='empty'>No posts available.</p>"
+                    );
+                    return;
+                }
+
+                response.results.forEach(function (post) {
+
+                    let postHTML = `
+                        <div class="post-card">
+
+                            <a href="/blog/post/${post.id}/" class="post-title">
+                                <h2>${post.title}</h2>
+                            </a>
+
+                            <p class="post-info">
+                                Post ID: ${post.id}
+                            </p>
+
+                            <p class="post-content">
+                                ${post.content}
+                            </p>
+
+                            <a href="/blog/post/${post.id}/" class="read-more">
+                                Read More →
+                            </a>
+
+                        </div>
+                    `;
+
+                    postsContainer.append(postHTML);
+                });
+
+            },
+
+            error: function (xhr) {
+
+                console.log("API ERROR:");
+                console.log(xhr);
+
+                $("#posts-container").html(
+                    "<p class='empty'>Failed to load posts.</p>"
+                );
+            }
+        });
+    }
+
+    loadPosts();
+
+});
+
+</script>
+
+</body>
+</html>
