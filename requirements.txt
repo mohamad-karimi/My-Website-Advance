@@ -58,3 +58,10 @@ flake8==6.1.0
 # =========================
 pytest-django
 pytest
+
+# =========================
+# Background process and cache
+# =========================
+celery
+redis
+django-celery-beat
