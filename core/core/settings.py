@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     # Third-party
     "django_filters",
     "rest_framework",
@@ -55,8 +54,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "mail_templated",
     "djoser",
-    'django_celery_beat',
-
+    "django_celery_beat",
     # my apps
     "accounts",
     "blog",
@@ -200,4 +198,4 @@ DEFAULT_FROM_EMAIL = "test@example.com"
 SERVER_EMAIL = "test@example.com"
 
 # celery setting
-CELERY_BROKER_URL = 'redis://redis:6379/1'
+CELERY_BROKER_URL = "redis://redis:6379/1"

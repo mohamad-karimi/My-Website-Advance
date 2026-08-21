@@ -11,8 +11,11 @@ User = get_user_model()
 
 @pytest.fixture
 def common_user():
-    user = User.objects.create_user(email="test@gmail.com", password="@1234567")
+    user = User.objects.create_user(
+        email="test@gmail.com", password="@1234567"
+    )
     return user
+
 
 @pytest.fixture
 def user_permission(common_user):
@@ -36,22 +39,24 @@ def profile(common_user):
 
     return common_user.profile
 
+
 @pytest.fixture
 def category():
-    category = Category.objects.create(
-        name="test"
-    )
+    category = Category.objects.create(name="test")
 
     return category
-            
+
+
 @pytest.mark.django_db
-class TestPostApi():
+class TestPostApi:
     client = APIClient()
 
     def test_get_post_api_response_status_200(self, common_user):
         user = common_user
         self.client.force_authenticate(user=user)
-        url = reverse("blog:api-v1:post-list",)
+        url = reverse(
+            "blog:api-v1:post-list",
+        )
         response = self.client.get(url)
 
         assert response.status_code == 200
@@ -63,7 +68,7 @@ class TestPostApi():
             "category": category.id,
             "title": "test",
             "content": "test post",
-            "status":True,
+            "status": True,
             "published_date": timezone.now().date(),
         }
 
@@ -79,7 +84,7 @@ class TestPostApi():
             "category": category.id,
             "title": "test",
             "content": "test post",
-            "status":True,
+            "status": True,
             "published_date": timezone.now().date(),
         }
 
@@ -87,13 +92,15 @@ class TestPostApi():
 
         assert response.status_code == 201
 
-    def test_create_post_invalid_data_response_status_400(self, category, profile):
+    def test_create_post_invalid_data_response_status_400(
+        self, category, profile
+    ):
         url = reverse("blog:api-v1:post-list")
 
         data = {
             "title": "test",
             "content": "test post",
-            "status":True,
+            "status": True,
             "published_date": timezone.now().date(),
         }
 
