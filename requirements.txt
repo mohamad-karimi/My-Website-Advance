@@ -61,6 +61,11 @@ pytest-django
 pytest
 
 # =========================
+# Background process and cache
+# =========================
+celery
+redis
+django-celery-beat
 # Faker Data 
 # =========================
 Faker

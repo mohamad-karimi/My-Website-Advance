@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "mail_templated",
     "djoser",
+    "django_celery_beat",
     "corsheaders",
 
     # my apps
@@ -200,5 +201,7 @@ EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = "test@example.com"
 SERVER_EMAIL = "test@example.com"
 
+# celery setting
+CELERY_BROKER_URL = "redis://redis:6379/1"
 # Authorize to the api
 CORS_ALLOW_ALL_ORIGINS = True
