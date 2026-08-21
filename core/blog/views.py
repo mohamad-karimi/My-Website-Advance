@@ -51,6 +51,12 @@ class PostListView(ListView):
         posts = Post.objects.filter(status=True)
         return posts
 
+class PostListApi(TemplateView):
+    """
+    Show the data of api to the template
+    """
+    template_name = 'blog/post-list-api.html'
+
 
 class PostDetailView(LoginRequiredMixin, DetailView):
     """

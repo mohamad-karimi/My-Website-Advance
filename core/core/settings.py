@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     # Third-party
     "django_filters",
     "rest_framework",
@@ -55,6 +56,8 @@ INSTALLED_APPS = [
     "mail_templated",
     "djoser",
     "django_celery_beat",
+    "corsheaders",
+
     # my apps
     "accounts",
     "blog",
@@ -64,6 +67,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -199,3 +203,5 @@ SERVER_EMAIL = "test@example.com"
 
 # celery setting
 CELERY_BROKER_URL = "redis://redis:6379/1"
+# Authorize to the api
+CORS_ALLOW_ALL_ORIGINS = True
