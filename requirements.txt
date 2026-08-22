@@ -66,6 +66,8 @@ pytest
 celery
 redis
 django-celery-beat
+django-redis
+
 # Faker Data 
 # =========================
 Faker
